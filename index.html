@@ -15,6 +15,8 @@
       .header {
         text-align: center;
         padding: 0.1rem 0;
+        font-weight: bolder;
+        color: #333;
       }
       .container {
         padding: 0.2rem;
@@ -25,26 +27,23 @@
         align-items: center;
       }
       .img-style {
-        width: 1.7rem;
-        height: 1.7rem;
-        margin-bottom: 0.06rem;
-        margin-left: 0.06rem;
+        width: 3.4rem;
+        height: 3.4rem;
+        margin-bottom: 0.1rem;
+        margin-left: 0.1rem;
       }
     </style>
   </head>
   <body>
     <div class="header"><h1>程序员鼓励师日常生活照</h1></div>
-    <div class="container-wrap">
-      <div class="container"></div>
-    </div>
+    <div class="container"></div>
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.12.4/jquery.js"></script>
     <script type="text/javascript">
       var page = 1;
       addpic(page);
-
       function addpic(page) {
         $.ajax({
-          url: 'http://api.wangshuwen.com/getWelfareImages',
+          url: 'https://api.wangshuwen.com/getWelfareImages',
           type: 'GET',
           dataType: 'json',
           data: {
@@ -53,14 +52,17 @@
             crack: 1
           },
           success: function(result) {
+            //测试图片加载
+            console.log('图片 :', page);
             var getData = result.data;
             getData.forEach(function(item) {
               var img = `<img class="img-style" src="data:image/png;base64,${item.base64_url}">`;
               $('.container').append(img);
-              page += parseInt(page) + 1;
+              page = parseInt(page) + 1;
               addpic(page);
             });
           },
+
           error: function() {
             console.log('请求失败!');
           }
