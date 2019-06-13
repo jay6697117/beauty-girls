@@ -45,11 +45,11 @@
         setInterval(function() {
           page++;
           addPic(page);
-        }, 2000);
+        }, 3000);
         function addPic(page) {
           setTimeout(function() {
             $.ajax({
-              url: 'https://gank.io/api/data/福利/50/' + page,
+              url: 'http://gank.io/api/data/福利/50/' + page,
               method: 'get',
               success: function(data) {
                 console.log('请求成功!');
