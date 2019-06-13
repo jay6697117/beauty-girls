@@ -39,35 +39,36 @@
     <div class="container"></div>
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.12.4/jquery.js"></script>
     <script type="text/javascript">
-      var page = 1;
-      addpic(page);
-      function addpic(page) {
-        $.ajax({
-          url: 'https://api.wangshuwen.com/getWelfareImages',
-          type: 'GET',
-          dataType: 'json',
-          data: {
-            page: page,
-            pageSize: 1,
-            crack: 1
-          },
-          success: function(result) {
-            //测试图片加载
-            console.log('图片 :', page);
-            var getData = result.data;
-            getData.forEach(function(item) {
-              var img = `<img class="img-style" src="data:image/png;base64,${item.base64_url}">`;
-              $('.container').append(img);
-              page = parseInt(page) + 1;
-              addpic(page);
+      $(document).ready(function() {
+        var page = 1;
+        addPic(page);
+        setInterval(function() {
+          page++;
+          addPic(page);
+        }, 1000);
+        function addPic(page) {
+          setTimeout(function() {
+            $.ajax({
+              url: 'http://gank.io/api/data/福利/50/' + page,
+              method: 'get',
+              success: function(data) {
+                console.log('请求成功!');
+                console.log(this);
+                console.log(page);
+                console.log(data);
+                var resArr = data.results;
+                resArr.forEach(function(item) {
+                  var img = `<img class="img-style" src="${item.url}">`;
+                  $('.container').append(img);
+                });
+              },
+              error: function() {
+                console.log('请求失败!');
+              }
             });
-          },
-
-          error: function() {
-            console.log('请求失败!');
-          }
-        });
-      }
+          }, 2000);
+        }
+      });
     </script>
   </body>
 </html>
