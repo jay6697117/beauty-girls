@@ -49,7 +49,7 @@
         function addPic(page) {
           setTimeout(function() {
             $.ajax({
-              url: 'https://gank.io/api/data/福利/50/' + page,
+              url: 'http://gank.io/api/data/福利/50/' + page,
               method: 'get',
               success: function(data) {
                 console.log('请求成功!');
@@ -58,8 +58,11 @@
                 console.log(data);
                 var resArr = data.results;
                 resArr.forEach(function(item) {
-                  var img = `<img class="img-style" src="${item.url}">`;
-                  $('.container').append(img);
+                  var patt = new RegExp('https://ws1.sinaimg.cn/large/');
+                  if (patt.test(String(item.url))) {
+                    var img = `<img class="img-style" src="${item.url}">`;
+                    $('.container').append(img);
+                  }
                 });
               },
               error: function() {
